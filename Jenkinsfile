@@ -5,7 +5,7 @@ pipeline {
         string(name: 'TenantName', description: 'TenantName Here')
         choice(name: 'Environment', description: 'Environment Here', choices: 'dev\nqa\nloadtest\ndemo\nprod')
         choice(name: 'DeployLine', description: 'Deploy Line Here' , choices: 'a\nb\nc\nd')
-        string(name: 'PodsName', description: 'Please select the kube_config file', choices: 'KUBE_CONFIG_PROD_US_EAST_1\nKUBE_CONFIG_PROD_US_WEST_1\nKUBE_CONFIG_PROD_AP_SOUTHEST_1\nKUBE_CONFIG_PROD_AP_SOUTHEST_2\nKUBE_CONFIG_PROD_EU_WEST_1\nkUBE_CONFIG_DEV')
+        string(name: 'PodsName', description: 'Please select the kube_config file', choices: 'US_EAST_1\nUS_WEST_1\nAP_SOUTHEST_1\nAP_SOUTHEST_2\nEU_WEST_1\nDEV')
     }
 
     environment {
