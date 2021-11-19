@@ -44,6 +44,7 @@ pipeline {
                     // """
                     // }
                 }
+                }
                 // script {
                 //     sh """#!/bin/bash
                 //     kubectl -n ${KUBE_NAMESPACE} get pods
@@ -69,5 +70,5 @@ pipeline {
         }
     }
 }
-}
+
     
