@@ -27,7 +27,7 @@ pipeline {
         stage('LOGIN TO CLUSTER'){
             steps{
                 script{
-                    withCredentials([file(credentialsId: KUBE_CONFIG, varialbe: 'KUBE_CONFIG_FILE')]) {
+                    withCredentials([file(credentialsId: KUBE_CONFIG, variable: 'KUBE_CONFIG_FILE.txt')]) {
                         // Setting kube config
                         sh """
                         mkdir -p ~/.kube
