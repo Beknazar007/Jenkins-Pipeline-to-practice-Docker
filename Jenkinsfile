@@ -12,37 +12,37 @@ pipeline {
     }
 
     environment {
-        // TenantName = "${params.TenantName}"
-        // Environment = "${params.Environment}"
-        // DeployLine =  "${params.DeployLine}"
-        KUBE_CONFIG     = "${params.KUBE_CONFIG}"
-        KUBE_NAMESPACE  = "${params.Environment}-${params.TenantName}-${params.DeployLine}"
-        PROD_NAME       = "${params.PodsName}"
-        PROD_IP         = "${params.IPAddress}-${params.Port}"
+        // // TenantName = "${params.TenantName}"
+        // // Environment = "${params.Environment}"
+        // // DeployLine =  "${params.DeployLine}"
+        // KUBE_CONFIG     = "${params.KUBE_CONFIG}"
+        // KUBE_NAMESPACE  = "${params.Environment}-${params.TenantName}-${params.DeployLine}"
+        // PROD_NAME       = "${params.PodsName}"
+        // PROD_IP         = "${params.IPAddress}-${params.Port}"
     }
 
     stages{
         stage('Delete Replicaset'){
             steps{
                 script{
-                    withCredentials([file(credentialsId: KUBE_CONFIG, varialbe: 'KUBE_CONFIG_FILE')]) {
-                        // Setting kube config
-                        sh """
-                        mkdir -p ~/.kube
-                        cp ${KUBE_CONFIG_FILE} ~/.kube/config
-                        """
-                    }
+                    // withCredentials([file(credentialsId: KUBE_CONFIG, varialbe: 'KUBE_CONFIG_FILE')]) {
+                    //     // Setting kube config
+                    //     sh """
+                    //     mkdir -p ~/.kube
+                    //     cp ${KUBE_CONFIG_FILE} ~/.kube/config
+                    //     """
+                    // }
                 }
-                script {
-                    sh """#!/bin/bash
-                    kubectl -n ${KUBE_NAMESPACE} get pods
-                    echo "[INFO] Deleting inactive \"${PODS_NAME}\" pods in \"${KUBE_NAMESPACE}\""
-                    kubectl delete pods \$(kubectl get pods -n ${KUBE_NAMESPACE} | grep ${PODS_NAME} | awk '{print \$1}') -n ${KUBE_NAMESPACE}
-                    echo "[INFO] Current pods in \"${KUBE_NAMESPACE}\""
-                    sleep 5
-                    kubectl -n ${KUBE_NAMESPACE} get pods
-                    """
-                }
+                // script {
+                //     sh """#!/bin/bash
+                //     kubectl -n ${KUBE_NAMESPACE} get pods
+                //     echo "[INFO] Deleting inactive \"${PODS_NAME}\" pods in \"${KUBE_NAMESPACE}\""
+                //     kubectl delete pods \$(kubectl get pods -n ${KUBE_NAMESPACE} | grep ${PODS_NAME} | awk '{print \$1}') -n ${KUBE_NAMESPACE}
+                //     echo "[INFO] Current pods in \"${KUBE_NAMESPACE}\""
+                //     sleep 5
+                //     kubectl -n ${KUBE_NAMESPACE} get pods
+                //     """
+                // }
                 script {
                     sh """
                     
