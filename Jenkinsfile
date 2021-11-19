@@ -2,16 +2,16 @@ pipeline {
     agent any
 
     parameters {
-        // string(name: 'TenantName', description: 'TenantName Here')
-        // choice(name: 'Environment', description: 'Environment Here', choices: 'dev\nqa\nloadtest\ndemo\nprod')
-        // choice(name: 'DeployLine', description: 'Deploy Line Here' , choices: 'a\nb\nc\nd')
-        // string(name: 'PodsName', description: 'Pod name to be delete' )
-        // choice(name: 'KUBE_CONFIG' , description: 'Please select the kube_config file', choices: 'US_EAST_1\nUS_WEST_1\nAP_SOUTHEST_1\nAP_SOUTHEST_2\nEU_WEST_1\nDEV')
+        string(name: 'TenantName', description: 'TenantName Here')
+        choice(name: 'Environment', description: 'Environment Here', choices: 'dev\nqa\nloadtest\ndemo\nprod')
+        choice(name: 'DeployLine', description: 'Deploy Line Here' , choices: 'a\nb\nc\nd')
+        string(name: 'PodsName', description: 'Pod name to be delete' )
+        choice(name: 'KUBE_CONFIG' , description: 'Please select the kube_config file', choices: 'US_EAST_1\nUS_WEST_1\nAP_SOUTHEST_1\nAP_SOUTHEST_2\nEU_WEST_1\nDEV')
         string(name: 'IPAddress', description: 'Write IP Address' )
         string(name: 'Port', description: 'Write Port' ) 
             
     }
-    
+
 
 
     environment {
