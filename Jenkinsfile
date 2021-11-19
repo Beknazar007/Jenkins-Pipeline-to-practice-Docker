@@ -29,7 +29,7 @@ pipeline {
                 script{
                     withCredentials([file(credentialsId: 'KUBE_CONFIG', variable: 'KUBE_CONFIG_FILE')]) {
                         // Setting kube config
-                    sh """#!/bin/bash
+                    sh """
                     kubectl -n birinchi get pods
                     kubectl config set-context --current --namespace=birinchi
                     kubectl exec --stdin --tty ngnix   -- /bin/bash
