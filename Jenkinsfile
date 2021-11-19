@@ -29,10 +29,10 @@ pipeline {
                 script{
                     withCredentials([file(credentialsId: 'KUBE_CONFIG', variable: 'KUBE_CONFIG_FILE')]) {
                         // Setting kube config
-                    sh 'pwd'
-                    sh 'ls -la'
-                    sh 'ip a'
-                    sh 'touch beki.file'
+                    sh """ 
+                    mkdir -p ~/.beki
+                    cp ${KUBE_CONFIG_FILE} ~/.beki/config"""
+                    
                     // sh """kubectl -n birinchi get pods
                     // kubectl config set-context --current --namespace=birinchi
                     // kubectl exec --stdin --tty ngnix   -- /bin/bash
