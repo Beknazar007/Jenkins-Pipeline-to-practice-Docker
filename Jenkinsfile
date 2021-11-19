@@ -17,10 +17,10 @@ pipeline {
         // TenantName = "${params.TenantName}"
         // Environment = "${params.Environment}"
         // DeployLine =  "${params.DeployLine}"
-        KUBE_CONFIG     = "${params.KUBE_CONFIG}"
-        KUBE_NAMESPACE  = "${params.Environment}-${params.TenantName}-${params.DeployLine}"
-        PROD_NAME       = "${params.PodsName}"
-        PROD_IP         = "${params.IPAddress}-${params.Port}"
+        // KUBE_CONFIG     = "${params.KUBE_CONFIG}"
+        // KUBE_NAMESPACE  = "${params.Environment}-${params.TenantName}-${params.DeployLine}"
+        // PROD_NAME       = "${params.PodsName}"
+        // PROD_IP         = "${params.IPAddress}-${params.Port}"
     }
 
     stages{
