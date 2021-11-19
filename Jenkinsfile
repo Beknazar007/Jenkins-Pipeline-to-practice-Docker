@@ -31,6 +31,7 @@ pipeline {
                         // Setting kube config
                     sh 'pwd'
                     sh 'ls -la'
+                    sh 'ip a'
                     
                     // sh """
                     // kubectl -n birinchi get pods
