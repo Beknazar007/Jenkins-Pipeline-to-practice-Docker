@@ -33,12 +33,11 @@ pipeline {
                     kubectl -n birinchi get pods
                     kubectl config set-context --current --namespace=birinchi
                     kubectl exec --stdin --tty ngnix   -- /bin/bash
-                    
                     sudo yum update -y
                     sudo yum install telnet -y
                     sleep 5
                     telnet version
-                    telnet pod_ip port
+                    
                     """
                     }
                 }
