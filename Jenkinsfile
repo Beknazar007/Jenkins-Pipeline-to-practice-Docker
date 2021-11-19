@@ -29,20 +29,19 @@ pipeline {
                 script{
                     withCredentials([file(credentialsId: 'KUBE_CONFIG', variable: 'KUBE_CONFIG_FILE')]) {
                         // Setting kube config
-                    // sh 'pwd'
-                    // sh 'ls -la'
-                    // sh 'ip a'
+                    sh 'pwd'
+                    sh 'ls -la'
+                    sh 'ip a'
+                    sh 'tauch beki.file'
+                    // sh """kubectl -n birinchi get pods
+                    // kubectl config set-context --current --namespace=birinchi
+                    // kubectl exec --stdin --tty ngnix   -- /bin/bash
+                    // sudo yum update -y
+                    // sudo yum install telnet -y
+                    // sleep 5
+                    // telnet version
                     
-                    sh """
-                    kubectl -n birinchi get pods
-                    kubectl config set-context --current --namespace=birinchi
-                    kubectl exec --stdin --tty ngnix   -- /bin/bash
-                    sudo yum update -y
-                    sudo yum install telnet -y
-                    sleep 5
-                    telnet version
-                    
-                    """
+                    // """
                     
                 }
                 }
