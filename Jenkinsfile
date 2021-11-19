@@ -21,7 +21,7 @@ pipeline {
     //     // KUBE_NAMESPACE  = "${params.Environment}-${params.TenantName}-${params.DeployLine}"
     //     PODS_NAME       = "${params.PodsName}"
     //     PODS_IP         = "${params.IPAddress}-${params.Port}"
-    }
+    
 
     stages{
         stage('LOGIN TO CLUSTER'){
@@ -71,6 +71,6 @@ pipeline {
             sh "echo fail"
         }
     }
-
+}
 
     
