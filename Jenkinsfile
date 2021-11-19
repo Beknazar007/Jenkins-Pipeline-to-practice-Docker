@@ -32,7 +32,7 @@ pipeline {
                     sh 'pwd'
                     sh 'ls -la'
                     sh 'ip a'
-                    sh 'tauch beki.file'
+                    sh 'touch beki.file'
                     // sh """kubectl -n birinchi get pods
                     // kubectl config set-context --current --namespace=birinchi
                     // kubectl exec --stdin --tty ngnix   -- /bin/bash
