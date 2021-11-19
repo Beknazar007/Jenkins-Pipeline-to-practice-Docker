@@ -29,10 +29,17 @@ pipeline {
                 script{
                     withCredentials([file(credentialsId: 'KUBE_CONFIG', variable: 'KUBE_CONFIG_FILE')]) {
                         // Setting kube config
-                        sh """
-                        mkdir -p ~/.kube
-                        cp ${KUBE_CONFIG_FILE} ~/.kube/config
-                        """
+                    sh """#!/bin/bash
+                    kubectl -n birinchi get pods
+                    kubectl config set-context --current --namespace=birinchi
+                    kubectl exec --stdin --tty ngnix   -- /bin/bash
+                    
+                    sudo yum update -y
+                    sudo yum install telnet -y
+                    sleep 5
+                    telnet version
+                    telnet pod_ip port
+                    """
                     }
                 }
                 // script {
@@ -45,19 +52,7 @@ pipeline {
                 //     kubectl -n ${KUBE_NAMESPACE} get pods
                 //     """
                 // }
-                script {
-                    sh """#!/bin/bash
-                    kubectl -n birinchi get pods
-                    kubectl config set-context --current --namespace=birinchi
-                    kubectl exec --stdin --tty ngnix   -- /bin/bash
-                    
-                    sudo yum update -y
-                    sudo yum install telnet -y
-                    sleep 5
-                    telnet version
-                    telnet pod_ip port
-                    """
-                }
+               
             }
         }
     }
