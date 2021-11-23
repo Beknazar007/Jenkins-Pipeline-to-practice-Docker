@@ -39,7 +39,7 @@ pipeline {
                 script {
                     sh """#!/bin/bash
                     kubectl -n ${KUBE_NAMESPACE} get pods
-                    kubectl exec --stdin --tty ${POD_NAME} -n ${KUBE_NAMESPACE}  -- /bin/bash 
+                    kubectl exec --stdin --tty ${PODS_NAME} -n ${KUBE_NAMESPACE}  -- /bin/bash 
                     sudo yum install telnet -y
                     telnet  ${PODS_IP}               
                     """
