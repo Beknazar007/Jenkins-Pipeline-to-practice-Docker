@@ -21,8 +21,19 @@ pipeline {
         KUBE_NAMESPACE  = "${params.Environment}-${params.TenantName}-${params.DeployLine}"
         PODS_NAME       = "${params.PodsName}"
         PODS_IP         = "${params.IPAddress}-${params.Port}"
+    }
     
-
+    stages{
+        stage("TELNET"){
+            steps{
+                script{
+                    withCredentials([file(credenetialsId: KUBE_CONFIG, variable: 'KUBE_CONFIG_FILE')]) {
+                       sh """ 
+                       mkdir -p ~/.kube
+                       cp ${KUBE_CONFIG_FILE} ~/.kube/config
+                       """ 
+        }
+    }
    
                 
                 script {
