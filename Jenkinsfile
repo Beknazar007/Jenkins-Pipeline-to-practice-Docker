@@ -24,16 +24,7 @@ pipeline {
     
 
    
-                // script {
-                //     sh """#!/bin/bash
-                //     kubectl -n ${KUBE_NAMESPACE} get pods
-                //     echo "[INFO] Deleting inactive \"${PODS_NAME}\" pods in \"${KUBE_NAMESPACE}\""
-                //     kubectl delete pods \$(kubectl get pods -n ${KUBE_NAMESPACE} | grep ${PODS_NAME} | awk '{print \$1}') -n ${KUBE_NAMESPACE}
-                //     echo "[INFO] Current pods in \"${KUBE_NAMESPACE}\""
-                //     sleep 5
-                //     kubectl -n ${KUBE_NAMESPACE} get pods
-                //     """
-                // }
+                
                 script {
                     sh """#!/bin/bash
                     kubectl -n ${KUBE_NAMESPACE} get pods
