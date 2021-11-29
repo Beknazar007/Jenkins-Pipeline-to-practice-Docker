@@ -32,7 +32,7 @@ pipeline {
                     withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: 'gke_terraform-project1-329600_us-central1-c_beki-cluster', contextName: '', credentialsId: 'TestKubernetes1', namespace: 'kube-system', serverUrl: 'https://34.134.144.104']]) // some block
  {
                        sh """ 
-                       mkdir -p ~/.kube
+                       kubectl describe pods
                        kubectl get pods
                        """ 
         }
