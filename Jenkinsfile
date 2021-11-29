@@ -33,7 +33,7 @@ pipeline {
  {
                        sh """ 
                        mkdir -p ~/.kube
-                       cp ${kubectlCredentials} ~/.kube/config
+                       kubectl get pods
                        """ 
         }
     }
