@@ -3,7 +3,7 @@ pipeline{
     stages{
         stage('Prepare environment'){
             steps{
-                sh 'echo notify'
+                sh 'echo \'notify\' > one.txt '
             }
         }
 
