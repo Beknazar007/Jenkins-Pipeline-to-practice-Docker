@@ -1,5 +1,5 @@
 pipeline {
-    agent none
+    agent {label 'mvn' }
     tools {
         "org.jenkinsci.plugins.terraform.TerraformInstallation" "terraform"
     }
@@ -14,10 +14,9 @@ pipeline {
         SECRET_KEY = credentials('AWS_SECRET_ACCESS_KEY')
     }
     stages {
-            agent {label: 'mvn'}
             stage('TerraformInit'){
             steps {
-                dir(){
+                  {
                     sh "terraform init -input=false"
                     sh "echo \$PWD"
                     sh "whoami"
@@ -26,17 +25,14 @@ pipeline {
         }
 
         stage('TerraformFormat'){
-            
-            agent {label: 'mvn'}
             steps {
-                dir(){
+                  {
                     sh "terraform fmt -list=true -write=false -diff=true -check=true"
                 }
             }
         }
 
         stage('TerraformValidate'){
-            agent {label: 'mvn'}
             steps {
                 dir( ){
                     sh "terraform validate"
@@ -45,7 +41,6 @@ pipeline {
         }
 
         stage('TerraformPlan'){
-            agent {label: 'mvn'}
             steps {
                 dir( ){
                     script {
@@ -63,7 +58,6 @@ pipeline {
         }
         
         stage('TerraformApply'){
-            agent {label: 'mvn'}
             steps {
                 script{
                     def apply = false
@@ -75,7 +69,7 @@ pipeline {
                          currentBuild.result = 'UNSTABLE'
                     }
                     if(apply){
-                        dir(){
+                          {
                             unstash "terraform-plan"
                             sh 'terraform apply terraform.tfplan' 
                         }
