@@ -1,5 +1,5 @@
 pipeline {
-    agent {label: 'mvn'}
+    agent none
     tools {
         "org.jenkinsci.plugins.terraform.TerraformInstallation" "terraform"
     }
@@ -14,6 +14,7 @@ pipeline {
         SECRET_KEY = credentials('AWS_SECRET_ACCESS_KEY')
     }
     stages {
+            agent {label: 'mvn'}
             stage('TerraformInit'){
             steps {
                 dir(){
@@ -25,6 +26,8 @@ pipeline {
         }
 
         stage('TerraformFormat'){
+            
+            agent {label: 'mvn'}
             steps {
                 dir(){
                     sh "terraform fmt -list=true -write=false -diff=true -check=true"
@@ -33,6 +36,7 @@ pipeline {
         }
 
         stage('TerraformValidate'){
+            agent {label: 'mvn'}
             steps {
                 dir( ){
                     sh "terraform validate"
@@ -41,6 +45,7 @@ pipeline {
         }
 
         stage('TerraformPlan'){
+            agent {label: 'mvn'}
             steps {
                 dir( ){
                     script {
@@ -58,6 +63,7 @@ pipeline {
         }
         
         stage('TerraformApply'){
+            agent {label: 'mvn'}
             steps {
                 script{
                     def apply = false
