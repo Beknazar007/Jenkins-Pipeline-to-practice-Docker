@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent {label: 'mvn'}
     tools {
         "org.jenkinsci.plugins.terraform.TerraformInstallation" "terraform"
     }
