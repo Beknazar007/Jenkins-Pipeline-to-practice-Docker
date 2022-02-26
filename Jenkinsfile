@@ -42,7 +42,7 @@ pipeline {
 
         stage('TerraformPlan'){
             steps {
-                
+                withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'test-user-aws',secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]){
                     script {
                         try {
                             sh "terraform workspace new ${params.WORKSPACE}"
@@ -56,10 +56,10 @@ pipeline {
                 
             }
         }
-        
+        }    
         stage('TerraformApply'){
-            steps {
-                script{
+            steps {withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'test-user-aws',secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]){
+                            script{
                     def apply = false
                     try {
                         input message: 'Can you please confirm the apply', ok: 'Ready to Apply the Config'
@@ -74,7 +74,9 @@ pipeline {
                             sh 'terraform apply terraform.tfplan' 
                         
                     }
-                }
+                }    
+            }
+
             }
         }
     }
