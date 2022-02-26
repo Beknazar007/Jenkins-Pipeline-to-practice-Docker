@@ -10,8 +10,7 @@ pipeline {
         TF_HOME = tool('Terraform')
         TP_LOG = "WARN"
         PATH = "$TF_HOME:$PATH"
-        ACCESS_KEY = credentials('AWS_ACCESS_KEY_ID')
-        SECRET_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+
     }
     stages {
         stage('TerraformInit'){
@@ -49,7 +48,7 @@ pipeline {
                         } catch (err) {
                             sh "terraform workspace select ${params.WORKSPACE}"
                         }
-                        sh "terraform plan -var 'access_key=$ACCESS_KEY' -var 'secret_key=$SECRET_KEY' \
+                        sh "terraform plan -var   \
                         -out terraform.tfplan;echo \$? > status"
                         stash name: "terraform-plan", includes: "terraform.tfplan"
                     }
