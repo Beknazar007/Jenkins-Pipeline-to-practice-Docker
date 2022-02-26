@@ -42,16 +42,8 @@ pipeline {
         stage('TerraformPlan'){
             steps {
                 withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'test-user-aws',secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]){
-                    script {
-                        try {
-                            sh "terraform workspace new ${params.WORKSPACE}"
-                        } catch (err) {
-                            sh "terraform workspace select ${params.WORKSPACE}"
-                        }
-                        sh "terraform plan     \
-                        -out terraform.tfplan;echo \$? > status"
-                        stash name: "terraform-plan", includes: "terraform.tfplan"
-                    }
+                    sh " terraform plan -out terraform.tfplan"
+ 
                 
             }
         }
@@ -70,7 +62,7 @@ pipeline {
                     if(apply){
                           
                             unstash "terraform-plan"
-                            sh 'terraform apply terraform.tfplan' 
+                            sh 'terraform apply terraform.tfplan --auto-approve' 
                         
                     }
                 }    
