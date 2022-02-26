@@ -3,13 +3,16 @@ provider "aws" {
 
 }
 
-resource "aws_instance" "instance" {
-    count = 2
-    ami = "ami-0a200d3f40a2f6ca0"
-    instance_type = "t2.micro"
-    tags = {
-      name = "Name"
-      value = "Beki"
-    }
-  
+resource "aws_instance" "server" {
+  count = 4 # create four similar EC2 instances
+
+  ami           = "ami-038b3df3312ddf25d"
+  instance_type = "t2.micro"
+
+  tags = {
+    Name = "Server ${count.index}"
+  }
 }
+
+  
+ 
