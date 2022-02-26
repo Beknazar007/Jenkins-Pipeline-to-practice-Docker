@@ -1,74 +1,70 @@
 pipeline {
-    agent {label 'mvn' }
-    tools {
-        "org.jenkinsci.plugins.terraform.TerraformInstallation" "Terraform"
-    }
-    parameters {
-        string(name: 'WORKSPACE', defaultValue: 'development', description:'setting up workspace for terraform')
-    }
-    environment {
-        TF_HOME = tool('Terraform')
-        TP_LOG = "WARN"
-        PATH = "$TF_HOME:$PATH"
-
-    }
+  agent  any
     stages {
-        stage('TerraformInit'){
-            steps {
-                  
-                    sh "terraform init -input=false"
-                    sh "echo \$PWD"
-                    sh "whoami"
-                
-            }
-        }
 
-        stage('TerraformFormat'){
-            steps {
-                  
-                    sh "terraform fmt -list=true -write=false -diff=true -check=true"
-               
-            }
+      stage ('Checkout SCM'){
+        steps {
+          checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git', url: 'https://bitbucket.org/dptrealtime/terraform.git']]])
         }
+      }
 
-        stage('TerraformValidate'){
-            steps {
-                
-                    sh "terraform validate"
-                
-            }
-        }
-
-        stage('TerraformPlan'){
-            steps {
-                withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'test-user-aws',secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]){
-                    sh " terraform plan  "
+     
+      stage('Set Terraform path') {
+       steps {
+         script {
+            def tfHome = tool name: 'Terraform'
+            env.PATH = "${tfHome}:${env.PATH}"
+         }
+     }
+  }
+  stage('terraform init') {
  
-                
-            }
+       steps {
+           dir ("vpc") {
+                script {
+                                    withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'test-user-aws',secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+                    sh 'terraform init -no-color'
+                    }
+             }
+           }
         }
-        }    
-        stage('TerraformApply'){
-            steps {withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'test-user-aws',secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]){
-                            script{
-                    def apply = false
-                    try {
-                        input message: 'Can you please confirm the apply', ok: 'Ready to Apply the Config'
-                        apply = true
-                    } catch (err) {
-                        apply = false
-                         currentBuild.result = 'UNSTABLE'
-                    }
-                    if(apply){
-                          
-                            unstash "terraform-plan"
-                            sh 'terraform apply terraform.tfplan --auto-approve' 
-                        
-                    }
-                }    
-            }
+      }
 
+  stage('terraform Plan') {
+ 
+       steps {
+           dir ("vpc") {
+            
+               script {
+                                    withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'test-user-aws',secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]){
+                    sh 'terraform plan -no-color -out=plan.out'
+                    }
+               }
             }
         }
-    }
+      }
+
+  stage('Waiting for Approvals') {
+            
+      steps{
+          input('Plan Validated? Please approve to create VPC Network in AWS?')
+			  }
+      }    
+
+  stage('terraform Apply') {
+ 
+       steps {
+           dir ("vpc") {
+            
+              script {
+                                    withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'test-user-aws',secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]){
+                    sh 'terraform apply -no-color -auto-approve plan.out'
+                    sh "terraform output"
+                    }
+              }
+            
+           }
+        }
+      }
+   }
 }
