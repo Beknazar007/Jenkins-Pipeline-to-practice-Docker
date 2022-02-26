@@ -20,12 +20,12 @@ pipeline {
   stage('terraform init') {
  
        steps {
-           {
+            
                 script {
                                     withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'test-user-aws',secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
                     sh 'terraform init -no-color'
                     }
-             }
+              
            }
         }
       }
@@ -33,13 +33,13 @@ pipeline {
   stage('terraform Plan') {
  
        steps {
-           {
+           
             
                script {
                                     withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'test-user-aws',secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]){
                     sh 'terraform plan  '
                     }
-               }
+                
             }
         }
       }
@@ -54,14 +54,14 @@ pipeline {
   stage('terraform Apply') {
  
        steps {
-             {
+            
             
               script {
                                     withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'test-user-aws',secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]){
-                    sh 'terraform apply -no-color -auto-approve  '
+                    sh 'terraform apply -no-color -auto-approve plan.out'
                     sh "terraform output"
                     }
-              }
+               
             
            }
         }
