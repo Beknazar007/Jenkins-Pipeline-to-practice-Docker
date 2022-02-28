@@ -61,7 +61,7 @@ pipeline {
                     sh 'terraform apply -no-color -auto-approve  '
                     sh "terraform output"
                     }
-               
+              mail bcc: 'It is from Beki', body: 'We send this message to inform you about ERROR',     subject: 'This is message from Jenkins', to: 'saitovbeknazar6@gmail.com' 
           }
         }
       }
