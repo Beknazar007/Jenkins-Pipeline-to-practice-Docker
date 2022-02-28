@@ -1,5 +1,5 @@
 pipeline {
-  agent  any
+  agent  {label 'mvn'}
     stages {
 
       stage ('Checkout SCM'){
@@ -49,7 +49,7 @@ pipeline {
       steps{
           input('Plan Validated? Please approve to create VPC Network in AWS?')
 			  }
-      }    
+            }    
 
   stage('terraform Apply') {
  
@@ -62,8 +62,7 @@ pipeline {
                     sh "terraform output"
                     }
                
-            
-           }
+          }
         }
       }
    }
