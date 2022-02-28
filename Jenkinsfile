@@ -1,5 +1,5 @@
 pipeline {
-  agent  {label 'mvn'}
+  agent  any
     stages {
 
       stage ('Checkout SCM'){
