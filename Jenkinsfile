@@ -54,9 +54,7 @@ pipeline {
   stage('terraform Apply') {
  
        steps {
-            
-            
-              script {
+            script {
                     withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'test-user-aws',secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]){
                     sh 'terraform apply -no-color -auto-approve  '
                     sh "terraform output"

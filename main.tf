@@ -4,7 +4,7 @@ provider "aws" {
 }
 
 resource "aws_instance" "server" {
-  count = 1 # create four similar EC2 instances
+  count = 2 
 
   ami           = "ami-033b95fb8079dc481"
   instance_type = "t2.micro"
