@@ -11,7 +11,7 @@ pipeline{
       stage("run"){
         steps{
           sh """
-            sudo docker rum --rm hello_there
+            sudo docker rum  rm hello_there
             """
       }
     }
