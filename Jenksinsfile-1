@@ -1,0 +1,15 @@
+pipeline {
+  agent any
+  stages {
+    stage('build') {
+ kubernetesDeploy configs: 'k8s/deployment.yaml', kubeConfig: [path: ''], kubeconfigId: 'KubeId', secretName: '', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
+    }
+        stage( ) {
+          steps {
+            mail(to: 'saitovbeknazar6@gmail.com', subject: 'Assalam Aleikum', body: 'to the asdf')
+          }
+        }
+ 
+
+  }
+}
