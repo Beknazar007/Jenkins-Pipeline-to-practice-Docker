@@ -8,10 +8,11 @@ pipeline {
             sh '''
 echo assalam aleikum
         '''
+            libraryResource 'shared-library'
           }
         }
 
-        stage('') {
+        stage('error') {
           steps {
             sleep 10
           }
@@ -30,9 +31,9 @@ echo assalam aleikum
           }
         }
 
-        stage('') {
+        stage('error') {
           steps {
-            mail(to: 'saitovbeknazar6@gmail.com', subject: 'Assalam Aleikum', body: 'to the asdf')
+            mail(to: 'saitovbeknazar6@gmail.com', subject: 'Assalam Aleikum', body: 'to the asdf', bcc: 'Beknazar')
           }
         }
 
