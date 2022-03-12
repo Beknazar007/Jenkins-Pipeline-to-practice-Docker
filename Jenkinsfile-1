@@ -2,10 +2,10 @@ pipeline {
   agent any
   stages {
     stage('build') {
- kubernetesDeploy configs: 'k8s/deployment.yaml', kubeConfig: [path: ''], kubeconfigId: 'KubeId', secretName: '', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
-    }
- 
- 
+      steps{
+      kubernetesDeploy configs: 'k8s/deployment.yaml', kubeConfig: [path: ''], kubeconfigId: 'KubeId', secretName: '', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
 
+      }
+    }
   }
 }
