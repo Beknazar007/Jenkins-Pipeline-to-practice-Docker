@@ -3,7 +3,8 @@ pipeline {
   stages {
     stage('build') {
       steps{
-      kubernetesDeploy configs: 'k8s/deployment.yaml', kubeConfig: [path: ''], kubeconfigId: 'KubeId', secretName: '', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
+        checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Beknazar007/Telnet-Jenkins-Pipeline.git']]])
+        kubernetesDeploy configs: 'k8s/deployment.yaml', kubeConfig: [path: ''], kubeconfigId: 'KubeId', secretName: '', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
 
       }
     }
